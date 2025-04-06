@@ -1,4 +1,4 @@
-package structs
+package db_structs
 
 type User_info struct {
 	Name  string `json:"name"`

@@ -1,25 +1,28 @@
 package main
 
 import (
-	"database/sql"
+	"httpTest/handlers"
+	"httpTest/utils"
+
 	"log"
 	"net/http"
-
-	"github.com/Aragon-Joaquin/Learning-GO/handlers"
-	"github.com/Aragon-Joaquin/Learning-GO/utils"
 )
 
-var db *sql.DB
-
 func main() {
-	db = utils.MakeConnToDB()
-	utils.CreateTables(db)
+	utils.MakeConnToDB()
+	utils.CreateTables(utils.Db)
 
-	defer db.Close()
+	defer utils.Db.Close()
 
+	//mux can do pattern matching with regex
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/", handlers.HomeHandler)
+	mux.HandleFunc("GET /home", handlers.RootHandler)
+	mux.HandleFunc("/users", handlers.Users)
+	mux.HandleFunc("/bank", handlers.Bank)
+
+	// 404
+	http.HandleFunc("/", handlers.NotFound)
 
 	if err := http.ListenAndServe(":8080", mux); err != nil {
 		log.Fatalln(err)

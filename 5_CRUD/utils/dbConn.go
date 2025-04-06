@@ -7,6 +7,8 @@ import (
 	"github.com/mattn/go-sqlite3"
 )
 
+var Db *sql.DB
+
 const (
 	createTable = `
 	CREATE TABLE IF NOT EXISTS user_info (
@@ -26,7 +28,7 @@ const (
 	PathToDB = "./db/db.db"
 )
 
-func MakeConnToDB() *sql.DB {
+func MakeConnToDB() {
 	sql.Register("sqlite3_with_extensions",
 		&sqlite3.SQLiteDriver{
 			Extensions: []string{
@@ -40,7 +42,7 @@ func MakeConnToDB() *sql.DB {
 		log.Fatalln(err)
 	}
 
-	return db
+	Db = db
 }
 
 func CreateTables(db *sql.DB) {

@@ -1,7 +1,15 @@
 package handlers
 
-import "net/http"
+import (
+	"net/http"
+)
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("This is the home page."))
+func RootHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	http.ServeFile(w, r, "./pages/rootPage.html")
+}
+
+func NotFound(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
+	w.Write([]byte("Route not valid"))
 }
