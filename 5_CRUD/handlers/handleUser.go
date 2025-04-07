@@ -45,7 +45,6 @@ func Users(w http.ResponseWriter, r *http.Request) {
 				totalUsers = append(totalUsers, user)
 			}
 
-			w.WriteHeader(http.StatusCreated)
 			json.NewEncoder(w).Encode(totalUsers)
 		}
 
@@ -70,6 +69,7 @@ func Users(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
+			w.WriteHeader(http.StatusCreated)
 			json.NewEncoder(w).Encode(user_inserted)
 		}
 
@@ -113,9 +113,7 @@ func Users(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(user_deleted)
 		}
 	default:
-		w.Write([]byte("Method not allowed"))
-		w.WriteHeader(http.StatusMethodNotAllowed)
-
+		MethodNotAllowed(w)
 	}
 
 }

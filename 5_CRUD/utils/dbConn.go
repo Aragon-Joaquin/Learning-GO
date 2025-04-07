@@ -20,7 +20,7 @@ const (
 	CREATE TABLE IF NOT EXISTS bank_account (
     	bank_uuid varchar(256) not null unique,
     	money real default(0),
-    	user_email varchar(256), 
+    	user_email varchar(256) unique not null, 
     	foreign key (user_email) references user_info(email) 
 	);`
 
